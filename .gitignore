@@ -3,6 +3,7 @@
 /public
 /storage/*.key
 /vendor
+/storage
 /app/myappenv.php
 /.phpdoc
 .env
