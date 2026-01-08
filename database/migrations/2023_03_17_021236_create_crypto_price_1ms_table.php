@@ -1,0 +1,34 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateCryptoPrice1msTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('crypto_price_1ms', function (Blueprint $table) {
+            $table->bigInteger('timestamp');
+            $table->string('curency',30);
+            $table->string('price', 30);
+            $table->primary(['timestamp', 'curency']);
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('crypto_price_1ms');
+    }
+}

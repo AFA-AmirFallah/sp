@@ -1,0 +1,31 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::table('branches', function (Blueprint $table) {
+            $table->text('extra_info')->after('Ext')->nullable();
+            $table->text('myappenv')->after('Ext')->nullable();
+            $table->integer('status')->after('Description')->default(0)->index();
+            $table->integer('mony')->after('UserName')->default(0)->index();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::table('branches', function (Blueprint $table) {
+            //
+        });
+    }
+};
