@@ -1,0 +1,200 @@
+    <!-- Start of Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1 class="page-title mb-0">تماس با ما</h1>
+        </div>
+    </div>
+    <!-- End of Page Header -->
+
+    <!-- Start of Breadcrumb -->
+    <nav class="breadcrumb-nav mb-10 pb-1">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li><a href="demo1.html">صفحه اصلی </a></li>
+                <li>تماس با ما</li>
+            </ul>
+        </div>
+    </nav>
+    <!-- End of Breadcrumb -->
+
+    <!-- Start of PageContent -->
+    <div class="page-content contact-us">
+        <div class="container">
+            <section class="content-title-section mb-10">
+                <h3 class="title title-center mb-3">اطلاعات تماس
+                </h3>
+                <p class="text-center">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
+                    گرافیک است. ,
+                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. </p>
+            </section>
+            <!-- End of Contact Title Section -->
+
+            <section class="contact-information-section mb-10">
+                <div class="row owl-carousel owl-theme cols-xl-4 cols-md-3 cols-sm-2 cols-1"
+                    data-owl-options="{
+                        'items': 4,
+                        'nav': false,
+                        'dots': false,
+                        'loop': false,
+                        'margin': 20,
+                        'responsive': {
+                            '0': {
+                                'items': 1
+                            },
+                            '480': {
+                                'items': 2
+                            },
+                            '768': {
+                                'items': 3
+                            },
+                            '992': {
+                                'items': 4
+                            }
+                        }
+                    }">
+                    <div class="icon-box text-center icon-box-primary">
+                        <span class="icon-box-icon icon-email">
+                            <i class="w-icon-envelop-closed"></i>
+                        </span>
+                        <div class="icon-box-content">
+                            <h4 class="icon-box-title">آدرس ایمیل</h4>
+                            <p>mail@example.com</p>
+                        </div>
+                    </div>
+                    <div class="icon-box text-center icon-box-primary">
+                        <span class="icon-box-icon icon-headphone">
+                            <i class="w-icon-headphone"></i>
+                        </span>
+                        <div class="icon-box-content">
+                            <h4 class="icon-box-title">شماره تلفن</h4>
+                            <p>(123) 456-7890 / (123) 456-9870</p>
+                        </div>
+                    </div>
+                    <div class="icon-box text-center icon-box-primary">
+                        <span class="icon-box-icon icon-map-marker">
+                            <i class="w-icon-map-marker"></i>
+                        </span>
+                        <div class="icon-box-content">
+                            <h4 class="icon-box-title">آدرسها </h4>
+                            <p>ایران ، ارومیه</p>
+                        </div>
+                    </div>
+                    <div class="icon-box text-center icon-box-primary">
+                        <span class="icon-box-icon icon-fax">
+                            <i class="w-icon-fax"></i>
+                        </span>
+                        <div class="icon-box-content">
+                            <h4 class="icon-box-title">فکس </h4>
+                            <p>1-800-570-7777</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- End of Contact Information section -->
+
+            <hr class="divider mb-10 pb-1">
+
+            <section class="contact-section">
+                <div class="row gutter-lg pb-3">
+                    <div class="col-lg-6 mb-8">
+                        <h4 class="title mb-3">مردم معمولاً اینها را می پرسند</h4>
+                        <div class="accordion accordion-bg accordion-gutter-md accordion-border">
+                            <div class="card">
+                                <div class="card-header gradient-purple-indigo 0-hidden pb-80">
+                                    <a href="#collapse1" class="collapse">چگونه می توانم سفارش خود را لغو کنم؟</a>
+                                </div>
+                                <div id="collapse1" class="card-body expanded">
+                                    <p class="mb-0">
+                                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
+                                        گرافیک است. , لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده
+                                        از طراحان گرافیک است. .
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header gradient-purple-indigo 0-hidden pb-80">
+                                    <a href="#collapse2" class="expand">چرا ثبت نام من به تأخیر می افتد؟</a>
+                                </div>
+                                <div id="collapse2" class="card-body collapsed">
+                                    <p class="mb-0">
+                                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
+                                        گرافیک است. , لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده
+                                        از طراحان گرافیک است. .
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header gradient-purple-indigo 0-hidden pb-80">
+                                    <a href="#collapse3" class="expand">برای خرید محصولات به چه چیزی نیاز دارم؟</a>
+                                </div>
+                                <div id="collapse3" class="card-body collapsed">
+                                    <p class="mb-0">
+                                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
+                                        گرافیک است. , لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده
+                                        از طراحان گرافیک است. .
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header gradient-purple-indigo 0-hidden pb-80">
+                                    <a href="#collapse4" class="expand">چگونه می توانم سفارش را پیگیری کنم؟</a>
+                                </div>
+                                <div id="collapse4" class="card-body collapsed">
+                                    <p class="mb-0">
+                                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
+                                        گرافیک است. , لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده
+                                        از طراحان گرافیک است. .
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header gradient-purple-indigo 0-hidden pb-80">
+                                    <a href="#collapse5" class="expand">چگونه می توانم پول را پس بگیرم؟</a>
+                                </div>
+                                <div id="collapse5" class="card-body collapsed">
+                                    <p class="mb-0">
+                                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
+                                        گرافیک است. , لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده
+                                        از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم
+                                        است و برای شرایط فعلورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+                                        استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان
+                                        که لازم است و برای شرایط فع.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-8">
+                        <h4 class="title mb-3">ارسال یک پیام به ما</h4>
+                        <form class="form contact-us-form" action="#" method="post">
+                            <div class="form-group">
+                                <label for="username">نام کاربری </label>
+                                <input type="text" id="username" name="username" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="email_1">ایمیل شما</label>
+                                <input type="email" id="email_1" name="email_1" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="message">پیام شما</label>
+                                <textarea id="message" name="message" cols="30" rows="5" class="form-control"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-dark btn-rounded">اکنون ارسال کنید</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+            <!-- End of Contact Section -->
+        </div>
+
+        <!-- Google Maps - Go to the bottom of the page to change settings and map location. -->
+        <iframe
+            src=https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7915.525673176609!2d46.32542404246615!3d38.06389198146334!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzjCsDAzJzUzLjgiTiA0NsKwMTknMzkuNCJF!5e0!3m2!1sen!2s!4v1545664085241"
+            width="1900" height="500" frameborder="0" style="border:0" allowfullscreen></iframe>
+        <!-- End Map Section -->
+    </div>
+    <!-- End of PageContent -->

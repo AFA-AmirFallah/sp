@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="col-xl-4 col-lg-5 col-md-7 col-12 mx-auto">
+        <div class="logo-area text-center mb-3">
+            <a href="#"><img src="{{ \App\myappenv::Sitelogo }}" class="img-fluid" alt="logo"></a>
+        </div>
+        <div class="auth-wrapper form-ui border pt-4">
+            <div class="section-title title-wide mb-1 pb-0 no-after-title-wide">
+                <h2 class="font-weight-bold">به فروشگاه سپهر مال خوش آمدید</h2>
+            </div>
+            <div class="circle-box-icon">
+                <i class="mdi mdi-account-circle-outline"></i>
+            </div>
+            <h5 class="text-center font-weight-bold">شما به حساب کاربری خود وارد شدید!</h5>
+            <div class="message-light">
+                اکنون می‌توانید به صفحه‌ای که در آن بودید بازگردید و یا با تکمیل اطلاعات حساب کاربری خود
+                به کلیه امکانات و سرویس‌های سپهرمال دسترسی داشته باشید
+            </div>
+            <div class="text-center mt-5 mb-4">
+                <a href="{{route('home')}}" class="btn-primary-cm btn-with-icon">
+                    <i class="mdi mdi-home"></i>
+                    خانه
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
