@@ -1,0 +1,672 @@
+<?php
+
+namespace App\Http\Controllers\setting;
+
+use App\APIS\Tapin;
+use App\arzonline\arzonline_api;
+use App\arzonline\arzonline_robot_work;
+use App\AzkiVam\azkivam;
+use App\branchenv;
+use App\Crypto\Brokers\Bingx;
+use App\Crypto\CryptoFormola_1;
+use App\Crypto\CryptoFunctions;
+use App\Crypto\CryptoInterface;
+use App\Crypto\CryptoRobots;
+use App\Crypto\Strategy\kv_1;
+use App\Crypto\Strategy\kv_2;
+use App\Crypto\TradersFunctions;
+use App\Http\Controllers\APIS\wordpress;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Credit\Reports;
+use App\Functions\CallCenterClass;
+use App\Functions\ConsultClass;
+use App\Functions\DateTimeClass;
+use App\Functions\examclass;
+use App\Functions\Orders;
+use App\Http\Controllers\woocommerce\buy;
+use App\Http\Controllers\woocommerce\product;
+use App\Http\Middleware\Lic;
+use App\Models\post_views;
+use App\Models\DeviceOwner;
+use App\Models\goods;
+use App\Models\product_order;
+use App\Models\product_order_items;
+use App\Models\report_overview;
+use App\Models\UserCredit;
+use App\Models\UserInfo;
+use App\Models\warehouse;
+use App\Models\warehouse_goods;
+use Illuminate\Http\Request;
+use Automattic\WooCommerce\Client;
+use Cache;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Session;
+use DB;
+use Illuminate\Support\Facades\Log;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Gate;
+use Shetabit\Multipay\Invoice;
+use Shetabit\Payment\Facade\Payment;
+use Throwable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use stdClass;
+use PDF;
+use App\Functions\Statistics;
+use App\LicMgt\UserLicense;
+use App\Functions\UserLicnese;
+use App\Http\Controllers\APIS\poolkhord;
+use App\Http\Controllers\APIS\SMSSender;
+use App\Http\Controllers\APIS\VOIP;
+use App\Http\Controllers\Credit\DirectPayment;
+use App\Http\Controllers\Crypto\backtest;
+use App\Http\Controllers\Crypto\coinex;
+use App\myappenv;
+use App\Models\Calls;
+use App\Models\CryptoOrders;
+use App\Http\Controllers\Crypto\kucoin;
+use App\Http\Controllers\notification\notification_main;
+use App\Models\citys;
+use App\Models\metadata;
+use App\Models\notification;
+use App\Models\provinces;
+use App\PEC\PECMain;
+use App\PEP\Pasargad;
+use App\PEP\RSAKeyType;
+use App\PEP\RSAProcessor;
+use Exception;
+use App\APIS\SmsCenter;
+
+
+class debuger extends Controller
+{
+    public $someObject = 'afa [$param1, $param2]';
+
+    public function afa($param1, $param2)
+    {
+        return 'amir';
+    }
+
+    public function SyncByTavanPardakht()
+    {
+        $targetuser = UserInfo::where('Name', 'Name')->first();
+        if ($targetuser == null) { //finish database
+            return 'finish';
+        }
+        $MyReport = new Reports();
+        $MelliID = $targetuser->MelliID;
+        $Result =  $MyReport->Estelam($MelliID);
+        try {
+            $fullname = $Result->fullName;
+            $Name = strtok($fullname, '  ');
+            $Family = substr($fullname, strpos($fullname, " ") + 1);
+            $Mobile = $Result->tham;
+            $NewData = [
+                'Name' => $Name,
+                'Family' => $Family,
+                'MobileNo' => $Mobile,
+                'extranote' => $fullname
+            ];
+        } catch (Throwable $e) {
+            $fullname = 'faild';
+            $NewData = [
+                'Name' => 'faild',
+                'Family' => 'faild',
+            ];
+        }
+        UserInfo::where('Name', 'Name')->where('MelliID', $MelliID)->update($NewData);
+        echo 'ok => ' . $fullname;
+        return $fullname;
+    }
+    public function article()
+    {
+        dd('sakam');
+    }
+    public function uploadfile($file, $location, $filepath, $filename)
+    {
+        $data = array();
+        // File extension
+        $extension = $file->getClientOriginalExtension();
+
+        // File upload location
+
+        // Upload file
+        $file->move($location, $filename);
+
+        // File path
+        $filepath = url('files/' . $filename);
+
+        // Response
+        $data['success'] = 1;
+        $data['message'] = 'Uploaded Successfully!';
+        $data['filepath'] = $filepath;
+        $data['extension'] = $extension;
+        return $data;
+    }
+    public function Dodebugger(Request $request)
+    {
+        echo ("<h1>victory2</h1>");
+
+
+
+
+
+        dd($request->input());
+        $data = array();
+
+        $validator = Validator::make($request->all(), [
+            'file' => 'required|mimes:png,jpg,jpeg,csv,txt,pdf|max:2048'
+        ]);
+
+        if ($validator->fails()) {
+            $data['success'] = 0;
+            $data['error'] = $validator->errors()->first('file'); // Error response
+        } else {
+            if ($request->file('file')) {
+                $file = $request->file('file');
+                $filename = time();
+                $filepath = url('files/' . $filename);
+                $location = storage_path() . '/' . 'myfile';
+                info($location);
+                $data = $this->uploadfile($file, $location, $filepath, $filename);
+            } else {
+                // Response
+                $data['success'] = 2;
+                $data['message'] = 'File not uploaded.';
+            }
+        }
+
+        return response()->json($data);
+    }
+
+    public function join_params($params)
+    {
+        $query_params = array();
+
+        foreach ($params as $param_key => $param_value) {
+            $string = $param_key . '=' . $param_value;
+            $query_params[] = str_replace(array('+', '%7E'), array(' ', '~'), rawurlencode($string));
+        }
+
+        return implode('%26', $query_params);
+    }
+
+    public function testing()
+    {
+        $param1 = 'object1';
+        $param2 = 'object2';
+        return ($this->someObject)($param1, $param2);
+    }
+
+    public function debugger(Request $request, $State = null)
+    {
+
+        if ($State == 'new') {
+            Session::put('new_thme', true);
+            Session::save();
+            return redirect()->route('home');
+        }
+        if ($State == 'old') {
+            Session::put('new_thme', false);
+            Session::save();
+            return redirect()->route('home');
+        }
+        if ($State == 'amir') {
+            $myconnection = new ConsultClass;
+            $myconnection->BothSideCall('09123936105', '09123090219');
+        }
+        if ($State == 'test1qaz') {
+            Session::put('testdebug', true);
+            echo 'debuger is on!';
+        }
+        if ($State == 'testzaq1') {
+            Session::put('testdebug', false);
+            echo 'debuger is Off!';
+        }
+        if ($State == 'mail') {
+            $HeaderText = 'با سلام رمز عبور شما';
+            $BodyText = 'کد رمز عبور شما عبارت است از';
+            $subject = 'ارسال رمز عبور';
+            Mail::to('afa.private@gmail.com')->send(new \App\Mail\MyTestMail($subject, $HeaderText, $BodyText));
+        }
+        if ($State == 'functionreport') {
+            $MyWordpress = new wordpress();
+            dd($MyWordpress->Topin_check_price('tapin', 50000, 10000, 1, 1, 1, 1, 1));
+        }
+        if ($State == 'test') {
+            $text = 'salam test';
+            $MySMS = new SmsCenter;
+            $MySMS->OndemandSMS($text, '09123936105', 'Credit Transfer', 'admin');
+            dd('send');
+            $order = new Orders;
+            $result = $order->get_order_pay_status(89);
+            dd($result);
+
+            $azki = new azkivam;
+            $azki_ticket = $azki->pay(200000, '09123936105', '');
+
+            dd(false, $azki_ticket);
+            Log::channel('file')->info('salam 3');
+            return true;
+            $Tapin = new Tapin;
+            $price = 1000000;
+            $weight = 200;
+            $address = 'ستارخان حبیب الهی کوچه لادن';
+            $city_code = 1;
+            $province_code = 1;
+            $first_name = 'امیر';
+            $last_name = 'فلاح';
+            $mobile = '09133936105';
+            $postal_code = '';
+            $package_weight = 210;
+            $resutl = $Tapin->GetTapinPrice($price, $weight, $address, $city_code, $province_code, $first_name, $last_name, $mobile, $postal_code, $package_weight);
+            dd($resutl);
+
+            $myvoip = new VOIP;
+            $result = $myvoip->test_call_by_index('09357974553', 530, '12233333');
+            dd($result);
+            dd('end');
+
+            $pasargad = new Pasargad();
+            $pasargad->setAmount(2000);
+            $pasargad->setInvoiceNumber(4031);
+            $pasargad->setInvoiceDate("2021/08/08 11:54:03");
+            $pasargad->setMobile("09123936105");
+            $redirectUrl = $pasargad->redirect();
+            return redirect()->to($redirectUrl);
+            dd($redirectUrl);
+
+
+            $Certificate = myappenv::PEPPrivate;
+            $processor = new RSAProcessor($Certificate, RSAKeyType::XMLString);
+
+            $merchantCode = myappenv::PEPMerchantCode; // كد پذيرنده
+            $terminalCode = myappenv::PEPTerminalCode; // كد ترمينال
+            $amount = $price; // مبلغ فاكتور
+            $redirectAddress = route('peppay');
+            $invoiceNumber = $ResNum; //شماره فاكتور
+
+            $redirectAddress = route('checkout', ['pay' => 'pep', 'ref' => $invoiceNumber]);
+            if (myappenv::SiteTheme == 'Theme1') {
+                $redirectAddress = route('ConfirmPayment', ['pay' => 'pep', 'ref' => $invoiceNumber]);
+            }
+            $timeStamp = date("Y/m/d H:i:s");
+            $invoiceDate = date("Y/m/d H:i:s"); //تاريخ فاكتور
+            $action = "1003"; // 1003 : براي درخواست خريد
+            $Mobile = Auth::user()->MobileNo;
+            $data = "#" . $merchantCode . "#" . $terminalCode . "#" . $invoiceNumber . "#" . $invoiceDate . "#" . $amount . "#" . $redirectAddress . "#" . $action . "#" . $timeStamp . "#";
+            $data = sha1($data, true);
+            $data = $processor->sign($data); // امضاي ديجيتال
+            $result = base64_encode($data); // base64_encode
+            $SendData = [
+                'invoiceNumber' => $invoiceNumber,
+                'invoiceDate' => $invoiceDate,
+                'amount' => $amount,
+                'terminalCode' => $terminalCode,
+                'merchantCode' => $merchantCode,
+                'redirectAddress' => $redirectAddress,
+                'timeStamp' => $timeStamp,
+                'mobile' => $Mobile,
+                'action' => $action,
+                'sign' => $result,
+            ];
+            echo "<form id='peppeyment' action='https://pep.shaparak.ir/gateway.aspx' method='post'>
+            <input  type='text' name='invoiceNumber' value='$invoiceNumber' /><br />
+            <input  type='text' name='invoiceDate' value='$invoiceDate' /><br />
+            <input  type='text' name='amount' value='$amount' /><br />
+            <input  type='text' name='terminalCode' value='$terminalCode' /><br />
+            <input  type='text' name='merchantCode' value='$merchantCode' /><br />
+            <input  type='text' name='redirectAddress' value='$redirectAddress' /><br />
+            <input  type='text' name='timeStamp' value='$timeStamp' /><br />
+            <input  name='mobile' value='$Mobile' /><br />
+            <input  type='text' name='action' value='$action' /><br />
+            <input  type='text' name='sign' value='$result' /><br />
+            </form><script>document.forms['peppeyment'].submit()</script>";
+            return true;
+
+
+
+
+            dd('end');
+            $Query = "SELECT * FROM UserInfo WHERE password = 'password' and Address2 is not null";
+            $result = DB::select($Query);
+            $count = 0;
+            $fault = 0;
+            foreach ($result as $result_item) {
+                try {
+                    $extra_data = [
+                        'InfoTxt' => $result_item->Address2,
+
+                    ];
+                    $extra_data = json_encode($extra_data);
+                    $save_data = [
+                        'extradata' => $extra_data,
+                        'Address2' => null
+                    ];
+                    UserInfo::where('UserName', $result_item->UserName)->update($save_data);
+                    $count++;
+                } catch (Exception $e) {
+                    $fault++;
+                }
+            }
+
+
+            dd('finish', $count, $fault);
+            $file = fopen('https://finoward.com/storage/files/newtest.csv', 'r');
+
+            // Initialize an empty array
+            $array = [];
+
+            // Read each line and parse it into an array
+            while (($data = fgetcsv($file)) !== false) {
+                $array[] = $data;
+            }
+
+            // Close the file
+            fclose($file);
+            $exam_class = new examclass;
+            $counter = 0;
+            foreach ($array as $array_item) {
+                if ($counter > 0) {
+                    $add_src = $exam_class->add_exam_question(3, $array_item[0], $array_item[1]); // add exam question
+                    $exam_class->save_new_answer($add_src->id, 1, $array_item[2]);
+                    $exam_class->save_new_answer($add_src->id, 2, $array_item[3]);
+                    $exam_class->add_formula($add_src->id, 1, $array_item[4]);
+                    $exam_class->add_formula($add_src->id, 2, $array_item[5]);
+                }
+                $counter++;
+            }
+
+            dd($array);
+
+            throw new \InvalidArgumentException("you can not do this!");
+            $direct_pay = new DirectPayment;
+            return $direct_pay->nextpay();
+
+            $kv2 = new kv_2;
+            $kv2->run(true);
+            return true;
+
+            $Conex = new coinex();
+            dd($Conex->getall());
+            $Bingx = new Bingx;
+            dd($Bingx->main());
+            $conex = new coinex();
+            dd($conex->getall());
+            $interface = new CryptoInterface('kucoin', 'admin');
+            dd($interface->get_all_tickers());
+
+
+            $kuCoin = new kucoin();
+            dd($kuCoin->get_all_tickers());
+            $pool = new poolkhord();
+            return $pool->pay_ipg(20000, 'test 1');
+
+            $tf = new TradersFunctions;
+            $Result = $tf->SMA_indicator('SHIB', [100, 50, 5]);
+            if (is_array($Result)) {
+                foreach ($Result as $ResultItem) {
+                    if ($ResultItem['PeriodItem'] == 100) {
+                        $f6 = $ResultItem['SMA'];
+                    } elseif ($ResultItem['PeriodItem'] == 50) {
+                        $f7 = $ResultItem['SMA'];
+                    } elseif ($ResultItem['PeriodItem'] == 5) {
+                        $f8 = $ResultItem['SMA'];
+                    }
+                }
+                $data = [
+                    'f6' => $f6,
+                    'f7' => $f7,
+                    'f8' => $f8
+                ];
+            }
+            dd($data);
+            $CryptoRobots = new CryptoRobots;
+            $Result = $CryptoRobots->run_users_robots('SHIB-USDT');
+            dd($Result);
+            dd('end');
+            $UserLic = new UserLicense;
+            $result =  $UserLic->is_user_has_lic('09123936105', 'test');
+            dd($result);
+            $close = array(12.33, 15.21, 14.54, 12.33, 15.21, 14.54);
+            $close = [
+                0 => "12",
+                1 => "12",
+                2 => "13",
+                3 => "33",
+                4 => "23",
+                5 => "33",
+                6 => "34",
+                7 => "55",
+                8 => "56",
+                9 => "45",
+                10 => "44",
+                11 => "55",
+                12 => "44",
+                13 => "44",
+                14 => "54",
+                15 => "34",
+                16 => "44",
+                17 => "44",
+                18 => "55",
+                19 => "55",
+                20 => "44",
+                21 => "45",
+                22 => "55",
+                23 => "55",
+                24 => "56",
+                25 => "55"
+            ];
+            $macd = trader_macd($close, 2, 5, 1);
+            dd($macd);
+
+
+
+            dd('ddd');
+            $url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest';
+            $url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/info';
+
+            $parameters = [
+                'symbol' => 'shiba',
+            ];
+
+            $headers = [
+                'Accepts: application/json',
+                'X-CMC_PRO_API_KEY: 25bd5fa6-8175-4b36-90d5-a6e9a707f630'
+            ];
+            $qs = http_build_query($parameters); // query string encode the parameters
+            $request = "{$url}?{$qs}"; // create the request URL
+
+
+            $curl = curl_init(); // Get cURL resource
+            // Set cURL options
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => $request,            // set the request URL
+                CURLOPT_HTTPHEADER => $headers,     // set the headers 
+                CURLOPT_RETURNTRANSFER => 1         // ask for raw response instead of bool
+            ));
+
+            $response = curl_exec($curl); // Send the request, save the response
+            $response = json_decode($response);
+            curl_close($curl); // Close request
+
+            /*   $response = $response->data;
+            foreach($response as $responseItem){
+                dd($responseItem);
+            }*/
+
+
+            dd($response);
+
+            throw new Exception('AFA Error!');
+            throw new Exception('My first Sentry error!');
+            $Formola = new CryptoFormola_1;
+            $functions = new CryptoFunctions;
+            $kuCoin = new kucoin();
+            dd($functions->MAIndecator());
+            dd($kuCoin->get_all_tickers());
+
+            // dd($kuCoin->get_my_orders());
+            dd($functions->Loop_2());
+            dd($Formola->watchDog());
+            dd($Formola->set_Coins_market_limit());
+            dd($Formola->buy_coins());
+
+
+
+            dd($kuCoin->get_all_tickers());
+            //dd($kuCoin->get_symbols('BTC-USDT'));
+            $crypto = new CryptoFormola_1;
+            //  dd($crypto->buy_coins());
+            dd($crypto->BuyCoins());
+
+
+            // dd($kuCoin->make_limit_Order('sell', 'BLUR-USDT' ,'1.227','14'));
+            dd($kuCoin->testListFills());
+            dd($kuCoin->get_ticker('ANKR-BTC'));
+            dd($kuCoin->get_base_trade_fee());
+            dd($kuCoin->get_RiskLimitLevel('ADAUSDT'));
+            dd($kuCoin->delete_order('63edd1c7c26aee00013fec53'));
+            dd('ddd');
+            $Crypto = new CryptoFunctions();
+            $Crypto->TokenSetter(Auth::user()->remember_token);
+            dd($Crypto->MarketAlyze(null, 'TMN', 1));
+            dd($Crypto->openOrders());
+
+            dd($Crypto->SaleCoin('PAXGTMN', 100));
+            dd($Crypto->delete_orders('LIMIT-98631ebc-9a2a-4274-8a52-1411ef960bab'));
+
+
+
+            dd('LIMIT-9862a578-c73e-4d64-adb9-efe1244f2288');
+
+            $crypto = new CryptoFormola_1;
+            $crypto->MarketName_setter('FTMTMN');
+            dd($crypto->Execute());
+
+
+
+            $Crypto = new CryptoFunctions();
+            $Crypto->TokenSetter(Auth::user()->remember_token);
+
+            $myvalet = $Crypto->get_my_Walet_coin();
+            dd($myvalet);
+
+
+            $Crypto->TokenSetter(Auth::user()->remember_token);
+
+            /*
+            $resuslt = $Crypto->delete_orders('LIMIT-98613182-0a87-400e-9caf-1066fdda4dff');
+            $resuslt = json_decode($resuslt);
+            dd($resuslt);
+*/
+
+            $result = $Crypto->openOrders();
+
+            dd($result);
+            $MarketInfo = $Crypto->GetMarketInfo('SHIB');
+            $ConStat = $MarketInfo['stats'];
+            $TargetPrice = $ConStat['lastPrice'];
+            $TargetPrice -= ($TargetPrice * 7 / 100);
+            $tickSize = $MarketInfo['tickSize'];
+            $TargetPrice = round($TargetPrice, $tickSize);
+            $Toman = 150000;
+            $Tobuy = $Toman / $TargetPrice;
+            $tickSize = $MarketInfo['tickSize'];
+            $quotePrecision = $MarketInfo['quotePrecision'];
+            $TargetQty = round($Tobuy, $quotePrecision);
+            $Coin = 'SHIB';
+            $result =  $Crypto->Orders($Coin, 'BUY', $TargetPrice, $TargetQty);
+            if ($result['success'] == 'true') {
+                $result = $result['result'];
+                $symbol = $result['symbol']; //SHIBTMN
+                $type = $result['type']; //LIMIT
+                $side = $result['side']; //BUY
+                $clientOrderId = $result['clientOrderId'];  //LIMIT-98612759-f277-40c4-ae40-6c3f368ae0bf
+                $price = $result['price'];
+                $origQty = $result['origQty'];
+                $executedSum = $result['executedSum'];
+                $executedQty = $result['executedQty'];
+                $executedPrice = $result['executedPrice'];
+                $sum = $result['sum'];
+                $executedPercent = $result['executedPercent'];
+                $status = $result['status'];
+                $active = $result['active'];
+                $OrderData = [
+                    'UserName' => Auth::id(),
+                    'formola' => 1,
+                    'symbol' => $symbol,
+                    'type' => $type,
+                    'side' => $side,
+                    'price' => $price,
+                    'origQty' => $origQty,
+                    'origSum' => $sum,
+                    'executedPrice' => $executedPercent,
+                    'executedQty' => $executedQty,
+                    'executedSum' => $executedSum,
+                    'executedPercent' => $executedPercent,
+                    'status' => $status,
+                    'active' => $active,
+                    'clientOrderId' => $clientOrderId
+                ];
+                $result = CryptoOrders::create($OrderData);
+                dd($result->id);
+            } else {
+                return $result['message'];
+            }
+
+            dd('ssss');
+            $user = new SMSSender();
+            $result = $user->MainSend();
+            dd($result);
+            //  $Crypto = new CryptoFunctions();
+            //   dd($Crypto->markets('ETHTMN'));
+            //  $callcenter = new CallCenterClass();
+
+            // return  $callcenter->synccalls();
+        }
+    }
+
+
+    public function startsWith($string, $startString)
+    {
+        $len = strlen($startString);
+        return (substr($string, 0, $len) === $startString);
+    }
+    public static function DebugEnable()
+    {
+        if ((session()->has('testdebug'))) {
+            if (Session::get('testdebug')) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+    private function generateAuthenticationEnvelope($pub_key, $terminalID, $password, $amount)
+    {
+        $data = $terminalID . $password . str_pad($amount, 12, '0', STR_PAD_LEFT) . '00';
+        $data = hex2bin($data);
+        $AESSecretKey = openssl_random_pseudo_bytes(16);
+        $ivlen = openssl_cipher_iv_length($cipher = "AES-128-CBC");
+        $iv = openssl_random_pseudo_bytes($ivlen);
+        $ciphertext_raw = openssl_encrypt($data, $cipher, $AESSecretKey, $options = OPENSSL_RAW_DATA, $iv);
+        $hmac = hash('sha256', $ciphertext_raw, true);
+        $crypttext = '';
+
+        openssl_public_encrypt($AESSecretKey . $hmac, $crypttext, file_get_contents('0068070969.txt'));
+
+        return array(
+            "data" => bin2hex($crypttext),
+            "iv" => bin2hex($iv),
+        );
+    }
+    public function IKC()
+    {
+        return view('test');
+    }
+}
