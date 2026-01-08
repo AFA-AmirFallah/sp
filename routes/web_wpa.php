@@ -1,0 +1,48 @@
+<?php
+
+Route::get('/ShowCats/{workcat}/{L1Work?}/{L2Work?}/{L3Work?}', [\App\Http\Controllers\WPA\RenderViews::class, 'ShowCats'])->name('ShowCats');
+Route::post('/ShowCats/{workcat}/{L1Work?}/{L2Work?}/{L3Work?}', [\App\Http\Controllers\WPA\RenderViews::class, 'DoShowCats']);
+Route::get('/CustomerServices', [\App\Http\Controllers\WPA\RenderViews::class, 'CustomerServices'])->name('CustomerServices');
+Route::post('/CustomerServices', [\App\Http\Controllers\WPA\RenderViews::class, 'DoCustomerServices']);
+Route::get('/Page/{id}/{PageName?}', [\App\Http\Controllers\WPA\pages::class, 'Page'])->name('Page');
+Route::post('/Page/{id}/{PageName?}', [\App\Http\Controllers\WPA\pages::class, 'DoPage']);
+Route::group(['middleware' => 'UserAccessSuperAdmin'], function () {
+        Route::get('/ThemeMaker', [\App\Http\Controllers\WPA_admin\banners::class, 'ThemeMaker'])->name('ThemeMaker');
+        Route::post('/ThemeMaker', [\App\Http\Controllers\WPA_admin\banners::class, 'DoThemeMaker']);
+        Route::get('/ElementThemeMaker', [\App\Http\Controllers\WPA_admin\banners::class, 'ElementThemeMaker'])->name('ElementThemeMaker');
+        Route::post('/ElementThemeMaker', [\App\Http\Controllers\WPA_admin\banners::class, 'DoElementThemeMaker']);
+        Route::get('/ElementEditThemeMaker/{ElementID}', [\App\Http\Controllers\WPA_admin\banners::class, 'ElementEditThemeMaker'])->name('ElementEditThemeMaker');
+        Route::post('/ElementEditThemeMaker/{ElementID}', [\App\Http\Controllers\WPA_admin\banners::class, 'DoElementEditThemeMaker']);
+        Route::get('/SinglePicManagement', [\App\Http\Controllers\WPA_admin\banners::class, 'SinglePicManagement'])->name('SinglePicManagement');
+        Route::post('/SinglePicManagement', [\App\Http\Controllers\WPA_admin\banners::class, 'DoSinglePicManagement']);
+        Route::get('/IndexListManagementAdvnace', [\App\Http\Controllers\WPA_admin\banners::class, 'IndexListManagementAdvnace'])->name('IndexListManagementAdvnace');
+        Route::post('/IndexListManagementAdvnace', [\App\Http\Controllers\WPA_admin\banners::class, 'DoIndexListManagementAdvnace']);
+        Route::get('/IndexListManagement', [\App\Http\Controllers\WPA_admin\banners::class, 'IndexListManagement'])->name('IndexListManagement');
+        Route::post('/IndexListManagement', [\App\Http\Controllers\WPA_admin\banners::class, 'DoIndexListManagement']);
+        Route::get('/ArticlePicManagement', [\App\Http\Controllers\WPA_admin\banners::class, 'ArticlePicManagement'])->name('ArticlePicManagement');
+        Route::post('/ArticlePicManagement', [\App\Http\Controllers\WPA_admin\banners::class, 'DoArticlePicManagement']);
+        Route::get('/SmallPicManagement', [\App\Http\Controllers\WPA_admin\banners::class, 'SmallPicManagement'])->name('SmallPicManagement');
+        Route::post('/SmallPicManagement', [\App\Http\Controllers\WPA_admin\banners::class, 'DoSmallPicManagement']);
+        Route::get('/TitrManagement', [\App\Http\Controllers\WPA_admin\banners::class, 'TitrManagement'])->name('TitrManagement');
+        Route::post('/TitrManagement', [\App\Http\Controllers\WPA_admin\banners::class, 'DoTitrManagement']);
+        Route::get('/BannerManagement', [\App\Http\Controllers\WPA_admin\banners::class, 'BannerManagement'])->name('BannerManagement');
+        Route::post('/BannerManagement', [\App\Http\Controllers\WPA_admin\banners::class, 'DoBannerManagement']);
+        Route::get('/IconManagement', [\App\Http\Controllers\WPA_admin\banners::class, 'IconManagement'])->name('IconManagement');
+        Route::post('/IconManagement', [\App\Http\Controllers\WPA_admin\banners::class, 'DoIconManagement']);
+        Route::get('/PwaPostManagement', [\App\Http\Controllers\WPA_admin\banners::class, 'PwaPostManagement'])->name('PwaPostManagement');
+        Route::post('/PwaPostManagement', [\App\Http\Controllers\WPA_admin\banners::class, 'DoPwaPostManagement']);
+        Route::get('/BoxIcon3x', [\App\Http\Controllers\WPA_admin\banners::class, 'BoxIcon3x'])->name('BoxIcon3x');
+        Route::post('/BoxIcon3x', [\App\Http\Controllers\WPA_admin\banners::class, 'DoBoxIcon3x']);
+        Route::get('/IconBoxManagement', [\App\Http\Controllers\WPA_admin\banners::class, 'IconBoxManagement'])->name('IconBoxManagement');
+        Route::post('/IconBoxManagement', [\App\Http\Controllers\WPA_admin\banners::class, 'DoIconBoxManagement']);
+        Route::get('/PosterManagement', [\App\Http\Controllers\WPA_admin\banners::class, 'PosterManagement'])->name('PosterManagement');
+        Route::post('/PosterManagement', [\App\Http\Controllers\WPA_admin\banners::class, 'DoPosterManagement']);
+        Route::get('/PosterManagement4X', [\App\Http\Controllers\WPA_admin\banners::class, 'PosterManagement4X'])->name('PosterManagement4X');
+        Route::post('/PosterManagement4X', [\App\Http\Controllers\WPA_admin\banners::class, 'DoPosterManagement4X']);
+        Route::get('/Layer2Index', [\App\Http\Controllers\WPA_admin\banners::class, 'Layer2Index'])->name('Layer2Index');
+        Route::post('/Layer2Index', [\App\Http\Controllers\WPA_admin\banners::class, 'DoLayer2Index']);
+        Route::get('/PosterManagementscroll', [\App\Http\Controllers\WPA_admin\banners::class, 'PosterManagementscroll'])->name('PosterManagementscroll');
+        Route::post('/PosterManagementscroll', [\App\Http\Controllers\WPA_admin\banners::class, 'DoPosterManagementscroll']);
+        Route::get('/myhtml/{Cat?}', [\App\Http\Controllers\WPA_admin\banners::class, 'HtmlObj'])->name('HtmlObj');
+        Route::post('/myhtml/{Cat?}', [\App\Http\Controllers\WPA_admin\banners::class, 'DoHtmlObj']);
+});
