@@ -395,12 +395,38 @@ class Orders extends TashimClass
         $MerchantCode = "15360733";
         $RedirectURL = route('seppay');
         //$RedirectURL = str_replace("http", "https", $RedirectURL);
+        $url = 'https://sep.shaparak.ir/onlinepg/onlinepg'; // آدرس API مقصد
 
+        $data = [
+            "action" => "token",
+            "TerminalId" => "15360733",
+            "Amount" => $price,
+            "ResNum" => $ResNum,
+            "RedirectUrl" => $RedirectURL,
+            "CellNumber" => Auth::user()->MobileNo,
+        ];
+        $ch = curl_init($url);
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST => true,
+            CURLOPT_HTTPHEADER => [
+                'Content-Type: application/json',
+            ],
+            CURLOPT_POSTFIELDS => json_encode($data),
+        ]);
 
-        echo "<form id='samanpeyment' action='https://sep.shaparak.ir/payment.aspx' method='post'>  <input type='hidden' name='Amount' value='{$price}' />      <input type='hidden' name='ResNum' value='{$ResNum}'>  <input type='hidden' name='RedirectURL' value='{$RedirectURL}'/>   <input type='hidden' name='MID' value='{$MerchantCode}'/> 
-            <button type='submit' >submit</button>
-            </form> <script>document.forms['samanpeyment'].submit()</script>
-            ";
+        $response = curl_exec($ch);
+        $response = json_decode($response,true);
+        $token = $response['token'];
+       // dd($response['token']);
+
+        echo "<form id='samanpeyment' action='https://sep.shaparak.ir/OnlinePG/OnlinePG' method='post'>  
+        <input type='hidden' name='Amount' value='{$price}' />      
+        <input type='hidden' name='ResNum' value='{$ResNum}'>  
+        <input type='hidden' name='RedirectURL' value='{$RedirectURL}'/>
+        <input type='hidden' name='Token' value='{$token}'/>
+        <button type='submit' >submit</button>
+        </form> <script>document.forms['samanpeyment'].submit()</script>";
     }
     public function payFromZAR()
     {
