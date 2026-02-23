@@ -79,83 +79,10 @@ class debuger extends Controller
 
     public function debugger(Request $request, $State = null)
     {
-        dd(env('Branch'));
-        $crowler = new CrawlerMain;
-        $outout = $crowler->rayan_reader();
-        dd('inja');
-        $reader = new CrawlerMain;
-        $ss = $reader->bama_reader();
-        dd('injam');
-        $call_center = new CallCenterClass();
-        echo $call_center->synccalls();
+        $trobpay = new \App\TrobPay\TrobPay();
+        $response = $trobpay->getTrobpayTokenWithCurl();
+        dd($response);
+        dd('hi');
 
-        dd('ssss');
-        return $this->send_sms();
-        dd('hiiii');
-        $sig = $this->signature('/payment/purchase', 'POST', '4565175b030b173ec1398366150ab0b7cb5d973023b1eb90abbdc435b987ff85');
-        dd($sig);
-        $l3 = new L3Work();
-        $l3->WorkCat = 100;
-        $l3->L1ID = 100;
-        $l3->L2ID = 100;
-        $l3->L3ID = 100;
-        $l3->Name = 'test';
-        $l3->Description = 'test';
-        $l3->img = 'test';
-        $result = $l3->save();
-        dd($result->id);
-
-
-
-        dd('end');
-        $filename = 'products.xml';
-        $contents = File::get($filename);
-
-        $xml = simplexml_load_string($contents);
-
-        $json = json_encode($xml);
-
-        $array = json_decode($json, TRUE);
-        $array = $array['Product'];
-        foreach ($array as $array_item) {
-            $product_id = $array_item['ProductId'];
-            $StockQuantity = $array_item['StockQuantity'];
-            $StockQuantity = intval($StockQuantity);
-            if ($StockQuantity < 0) {
-                $StockQuantity = 0;
-            }
-            if (isset($array_item['TierPrices'])) {
-                $PriceFormola = [];
-                $TierPrices = $array_item['TierPrices'];
-                foreach ($TierPrices as $TierPrices_item) {
-                    foreach ($TierPrices_item as $TierPrices_item_s) {
-                        if (isset($TierPrices_item_s['Quantity'])) {
-                            array_push($PriceFormola, ['ToNumber' => intval($TierPrices_item_s['Quantity']), 'Price' => intval($TierPrices_item_s['Price'])]);
-                        }
-                    }
-                }
-
-                if ($PriceFormola == []) {
-                    $PriceFormola = json_encode($PriceFormola);
-                    $target_wg =  warehouse_goods::where('GoodID', $product_id)->first();
-                    $update_data = [
-                        'QTY' => $StockQuantity
-                    ];
-                    warehouse_goods::where('GoodID', $product_id)->update($update_data);
-                } else {
-                    $PriceFormola = json_encode($PriceFormola);
-                    $target_wg =  warehouse_goods::where('GoodID', $product_id)->first();
-                    $update_data = [
-                        'PricePlan' => $PriceFormola,
-                        'QTY' => $StockQuantity
-                    ];
-                    warehouse_goods::where('GoodID', $product_id)->update($update_data);
-                }
-
-                echo 'ok => ' . $product_id;
-            }
-        }
-        dd('end');
-        echo 'salam';
     }
 }
