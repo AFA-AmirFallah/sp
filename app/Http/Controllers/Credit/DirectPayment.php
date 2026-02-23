@@ -366,7 +366,8 @@ class DirectPayment extends Controller
     }
     public function Doseppay(Request $request)
     {
-        $MerchantCode = "12155575";
+        
+        $MerchantCode = "15360733";
         if ($request->has('State')  && $request->input('State') == "OK") {
             $soapclient = new SoapClient('https://verify.sep.ir/Payments/ReferencePayment.asmx?WSDL');
             $res = $soapclient->VerifyTransaction($request->input('RefNum'), $MerchantCode);
