@@ -82,6 +82,7 @@ class debuger extends Controller
         $trobpay = new \App\TrobPay\TrobPay();
         $response = $trobpay->getTrobpayTokenWithCurl();
         dd($response);
+        
         dd('hi');
 
     }
