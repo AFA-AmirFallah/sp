@@ -24,6 +24,8 @@ Route::get('finpay', [\App\Http\Controllers\Credit\DirectPayment::class, 'finpay
 Route::get('ikc', [\App\Http\Controllers\APIS\IKC::class, 'main'])->name('ikc');
 Route::get('Debug327362/{State?}', [\App\Http\Controllers\setting\debuger::class, 'debugger'])->name('debugger');
 Route::post('Debug327362/{State?}', [\App\Http\Controllers\setting\debuger::class, 'Dodebugger']);
+Route::get('my-local/{State?}', [\App\Http\Controllers\setting\debuger::class, 'debugger']);
+Route::post('my-local/{State?}', [\App\Http\Controllers\setting\debuger::class, 'Dodebugger']);
 if (Lic::check('sitemap')) {
     require __DIR__ . '/web_sitemap.php';
 }
